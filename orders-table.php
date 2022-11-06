@@ -1,3 +1,10 @@
+<?php 
+include_once "database/conn.php";
+$query = "SELECT Id_Client, Name_Client, Phone_Client, Qte_Order, ID_Pro, StatU_Order  FROM orders  ";
+$stmt =$conn->prepare($query);
+$stmt->execute();
+?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -6,12 +13,13 @@
 </head>
 
 <body>
-
-        <?php include 'header.php';?>
+    <?php include 'header.php';?>
+  <?php include 'sidebar.php';?>
+        
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <?php include 'sidebar.php';?>
+      
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -25,7 +33,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Orders Table</h4>
+                        <h4 class="page-title">Orders </h4>
                     </div>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -39,7 +47,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Order  Table</h3>
+                            <h3 class="box-title">Order</h3>
                         
                             <div class="table-responsive">
                                 <table class="table text-nowrap">
@@ -53,40 +61,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                    <?php 
+                                     if($stmt->rowCount()>0){
+                                        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){  ?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Deshmukh</td>
-                                            <td>Prohaska</td>
-                                            <td>@Genelia</td>
+                                            <td><?php echo $row['Id_Client']?></td>
+                                            <td><?php echo $row['Name_Client']?></td>
+                                            <td><?php echo $row['Phone_Client']?></td>
+                                            <td><?php echo $row['Qte_Order']?></td>
+                                       
                                             <td> 
-                                                <div class="form-check">
-                                                  <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                                                </div>
+                                            <form method="POST" action="database/modify_orders.php">
+                                            <div class="form-group">
+                                            <select name="state" >
+                                             <?php $produit->Statuview($row['StatU_Order']);  ?>
+                                            </select>  
+                                            <input type="hidden" name="Id_Client" value="<?php echo $row['Id_Client']?>">
+                                            <input type="submit" class="btn btn-primary" name="upstate" value="save"/>
+                                            </div>
+                                            </form>
                                             </td>
+                                            
+                                
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Deshmukh</td>
-                                            <td>Gaylord</td>
-                                            <td>@Ritesh</td>
-                                            <td> 
-                                                <div class="form-check">
-                                                  <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Sanghani</td>
-                                            <td>Gusikowski</td>
-                                            <td>@Govinda</td>
-                                            <td> 
-                                                <div class="form-check">
-                                                  <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
+                                        <?php }}?>
                                     </tbody>
                                 </table>
                             </div>
@@ -99,6 +98,8 @@
         </div>
       
         <?php include 'footer.php';?>  
+    
+ 
     
 </body>
 

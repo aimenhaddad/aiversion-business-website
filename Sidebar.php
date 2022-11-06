@@ -9,7 +9,7 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php"
                                 aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Product Table</span>
+                                <span class="hide-menu">Product </span>
                             </a>
                         </li>
                     
@@ -17,7 +17,7 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="orders-table.php"
                                 aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Orders Table</span>
+                                <span class="hide-menu">Orders </span>
                             </a>
                         </li>
                      <!--   <li class="sidebar-item">
