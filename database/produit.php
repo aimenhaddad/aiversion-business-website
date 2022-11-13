@@ -5,13 +5,13 @@ class Produits{
 
 
 public function __construct($conn){
-
     $this->db = $conn;
 }
 
 
 
-public function create($namePro, $descriptionPro,$imagePro,$price){
+
+    public function create($namePro, $descriptionPro,$imagePro,$price){
     try{
         $stmt = $this->db->prepare("INSERT INTO produits( Name_Pro, Description_Pro, image, Price)
         VALUES ( :namePro, :descriptionPro ,:imagePro,:price)");
@@ -28,20 +28,22 @@ public function create($namePro, $descriptionPro,$imagePro,$price){
     }
     
   
-public function getID($ID_Pro){
+
+    public function getID($ID_Pro){
     $stmt = $this->db->prepare("SELECT Name_Pro, Description_Pro, image, Price FROM produits WHERE ID_Pro =:ID_Pro ");
     $stmt->execute(array(":ID_Pro "=>$ID_Pro ));
     $editRow = $stmt->fetch(PDO::FETCH_ASSOC);
     return $editRow;
-}
+    }
 
 
 
 
 
 
-public function update($ID_Pro,$namePro, $descriptionPro,$imagePro,$price){
-    try{
+    public function update($ID_Pro,$namePro, $descriptionPro,$imagePro,$price){
+    
+        try{
         $stmt = $this->db->prepare("UPDATE produits SET Name_Pro=:namePro,Description_Pro=:descriptionPro,image=:imagePro,Price=:price WHERE ID_Pro=:ID_Pro");
         $stmt->bindparam(":namePro",$namePro);
         $stmt->bindparam(":descriptionPro",$descriptionPro);
@@ -64,31 +66,34 @@ public function update($ID_Pro,$namePro, $descriptionPro,$imagePro,$price){
             $stmt->execute();
             return true;
         
-        }
+    }
 
 
 
 
 
-        public function dataview(){
+    public function dataview(){
             $query = "SELECT  ID_Pro,Name_Pro, Description_Pro, image, Price FROM produits ";
             $stmt =$this->db->prepare($query);
             $stmt->execute();
             return $stmt;
-        }
+    }
 
 
 
-   // Id_Client, Name_Client, Phone_Client, Qte_Order, ID_Pro, StatU_Order
-   public function createOrder($Name_Client, $Phone_Client,$Qte_Order,$ID_Pro,$StatU_Order){
+   
+    public function createOrder($Name_Client,$Phone_Client,$Qte,$Name_Pro,$State,$City, $Price, $shipping){
     try{
-        $stmt = $this->db->prepare("INSERT INTO orders(Name_Client, Phone_Client, Qte_Order, ID_Pro, StatU_Order)
-        VALUES ( :Name_Client, :Phone_Client ,:Qte_Order,:ID_Pro,:StatU_Order)");
+        $stmt = $this->db->prepare("INSERT INTO orders(Name_Client,Phone_Client,Qte,Name_Pro,State,City, Price, shipping) VALUES 
+         (:Name_Client, :Phone_Client ,:Qte,:Name_Pro,:State,:City,:Price,:shipping)");
         $stmt->bindparam(":Name_Client",$Name_Client);
         $stmt->bindparam(":Phone_Client",$Phone_Client);
-        $stmt->bindparam(":Qte_Order",$Qte_Order);
-        $stmt->bindparam(":ID_Pro",$ID_Pro);
-        $stmt->bindparam(":StatU_Order",$StatU_Order);
+        $stmt->bindparam(":Qte",$Qte);
+        $stmt->bindparam(":Name_Pro",$Name_Pro);
+        $stmt->bindparam(":State",$State);
+        $stmt->bindparam(":City",$City);
+        $stmt->bindparam(":Price",$Price);
+        $stmt->bindparam(":shipping",$shipping);
         $stmt->execute();
         return true;
         }catch(PDOException $e){
@@ -96,6 +101,7 @@ public function update($ID_Pro,$namePro, $descriptionPro,$imagePro,$price){
         return false;
         }
     }
+
     public function updateStatusOrder($Id_Client,$StatU_Order){
         try{
             $stmt = $this->db->prepare("UPDATE orders SET StatU_Order=:StatU_Order   WHERE Id_Client=:Id_Client");
@@ -109,7 +115,8 @@ public function update($ID_Pro,$namePro, $descriptionPro,$imagePro,$price){
             }
         }
        
-        public function Statuview($StatU_Order){
+    
+    public function Statuview($StatU_Order){
             $query = "SELECT  ID_Status, statu FROM status ";
             $stmt =$this->db->prepare($query);
             $stmt->execute();        
@@ -122,4 +129,5 @@ public function update($ID_Pro,$namePro, $descriptionPro,$imagePro,$price){
             }
         }
     }
+
 ?>

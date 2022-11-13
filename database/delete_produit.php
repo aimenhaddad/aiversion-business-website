@@ -20,7 +20,7 @@ if(isset($_GET['ID_Pro']) && isset($_GET['path'])) {
        
         $me="no delete local";
     }
-   header("Location:../index.php? $me");
+   header("Location:../produit_table.php? $me");
 }
 
 

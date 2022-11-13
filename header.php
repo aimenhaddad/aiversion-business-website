@@ -21,7 +21,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="index.php">
+                    <a class="navbar-brand" href="produit_table.php">
                         <!-- Logo icon -->
                         <span >
                             <!-- Dark Logo icon -->

@@ -1,12 +1,12 @@
 <?php 
 include_once "database/conn.php";
-$query = "SELECT Id_Client, Name_Client, Phone_Client, Qte_Order, ID_Pro, StatU_Order  FROM orders  ";
+$query = "SELECT Id_Client, Name_Client, Phone_Client, Qte_Order, ID_Pro, StatU_Order,City  FROM orders  ";
 $stmt =$conn->prepare($query);
 $stmt->execute();
 ?>
 
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltl" lang="en">
 
 <head>
 <?php include 'head.php';?>
@@ -64,26 +64,33 @@ $stmt->execute();
 
                                     <?php 
                                      if($stmt->rowCount()>0){
-                                        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){  ?>
-                                        <tr>
+                                        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){ 
+                                            if($row['StatU_Order']==1){
+                                                $stylec="color:#f0ad4e ";
+                                            }elseif($row['StatU_Order']==2){
+                                                  $stylec="color:#5cb85c";   
+                                                }else{
+                                                  $stylec="color:#d9534f";   
+                                                }
+                                            ?>
+                                        <tr >
                                             <td><?php echo $row['Id_Client']?></td>
                                             <td><?php echo $row['Name_Client']?></td>
                                             <td><?php echo $row['Phone_Client']?></td>
+                                            <td><?php echo $row['City']?></td>
                                             <td><?php echo $row['Qte_Order']?></td>
-                                       
                                             <td> 
                                             <form method="POST" action="database/modify_orders.php">
-                                            <div class="form-group">
-                                            <select name="state" >
+                                                <input type="hidden" name="Id_Client" value="<?php echo $row['Id_Client']?>">
+                                         
+                                            <select name="state" style="<?=$stylec?>" >
                                              <?php $produit->Statuview($row['StatU_Order']);  ?>
                                             </select>  
-                                            <input type="hidden" name="Id_Client" value="<?php echo $row['Id_Client']?>">
-                                            <input type="submit" class="btn btn-primary" name="upstate" value="save"/>
-                                            </div>
+                                            <input type="submit" class="btn btn-text  text-sm"  name="upstate" value="save" style="<?=$stylec?>"/>
+                                       
                                             </form>
                                             </td>
-                                            
-                                
+
                                         </tr>
                                         <?php }}?>
                                     </tbody>

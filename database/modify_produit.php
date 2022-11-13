@@ -21,7 +21,7 @@
 if (!empty($img_name)) {
     if ($error === 0) {
 		if ($file_Size > 20000000) {
-			header("Location:../index.php? Sorry, your file is too large."); 
+			header("Location:../produit_table.php? Sorry, your file is too large."); 
 		 }else {
 			  $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
 			  $img_ex_lc = strtolower($img_ex);
@@ -36,7 +36,7 @@ if (!empty($img_name)) {
 			}
 	  
 	}else {
-            header("Location:../index.php  unknown error occurred"); 
+            header("Location:../produit_table.php  unknown error occurred"); 
     }
 	}else{
         $new_img_name=$image;
@@ -44,9 +44,9 @@ if (!empty($img_name)) {
      // Insert into Databa
 				// Execute query	
 				if ($produit->update($ID_Pro,$namePro, $descriptionPro,$new_img_name,$price)){	
-					header("Location:../index.php?id=  done "); 	
+					header("Location:../produit_table.php?id=  done "); 	
 				} else {					
-					header("Location:../index.php?id=  failde "); 			
+					header("Location:../produit_table.php?id=  failde "); 			
 				}	
 
 	}

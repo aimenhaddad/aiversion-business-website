@@ -1,194 +1,114 @@
-<?php 
-include_once "database/conn.php";
- $query = "SELECT  ID_Pro,Name_Pro, Description_Pro, image, Price FROM produits ";
- $stmt =$conn->prepare($query);
- $stmt->execute();
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "skycode_shop";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM produits";
+$result = $conn->query($sql);
+
+
+
+$conn->close();
 ?>
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
-<?php include 'head.php';?>
-</head>
-
-<body>
-  <?php include 'header.php' ;?>    
-       <!--  ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-<?php include 'sidebar.php';?>
-
-
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-      
-        <div class="page-breadcrumb bg-white">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Product </h4>
-                    </div>
-                    
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />  
+        <meta name="author" content="" />
+        <title>Skycode-dz Shop</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="css/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="index.php">
+                    <img src="assets/logo.svg" width="100" height="30" class="d-inline-block align-top" alt="">
+                </a>
+                <div>
+                    <form class="form-inline my-2 my-lg-0 ">
+                        <div>
+                            <span>  Skycode-dz Shop</span>
+                        </div>
+                    </form>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-        <!-- Table Produit  -->
-        <!-- ============================================================== -->
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12 col-lg-12 col-sm-12">
-                        <div class="white-box">
-                        <h3 class="box-title">Product </h3>
-                        <div class="justify-content-end ">  
-                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModaladd" >+</button> 
-                             </div>
-                            <div class="table-responsive">
-                                <table class="table no-wrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Name</th>
-                                            <th class="border-top-0">Description</th>
-                                            <th class="border-top-0">Price</th>
-                                            <th class="border-top-0">Image</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                      <?php  
-                      if($stmt->rowCount()>0){
-                        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){ 
-                          ?>
-                            <tr>
-                                <td><?php echo $row['ID_Pro']?></td>
-                                <td><?php echo $row['Name_Pro']?></td>
-                                <td><?php echo $row['Description_Pro']?></td>
-                                <td><?php echo $row['Price']?></td>
-                                <td style="display:none;"><?php echo $row['image']?></td>
-                                <td class="p-1" class="Modaledit"><img src="database/upload/<?php echo $row['image']?>" height="100px" width="100" class="img-fluid img-thumbnail " >  </td>
-                               
-                                <td>
-                                <button type="button" class="btn btn-primary modaledit" data-toggle="modal" ><i class="fas fa-pencil-alt"></i></button>  
-                                <a class="btn btn-danger" href="database/delete_produit.php?ID_Pro=<?=$row['ID_Pro'];?>&path=upload/<?php echo $row['image']?>" ><i class='fa fa-trash' ></i></i></a>
-                                
-                                
-                              </td>
-                            </tr>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Skycode-dz Shop</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">The best from the best</p>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row justify-content-center">
 
+                <?php
+                    if ($result->num_rows > 0) {
+                    // output data of each row
+                    while($row = $result->fetch_assoc()) {
+                ?>
+                    <div class="col-sm-12 col-md-4 col-xl-3 mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="database/upload/<?php echo $row["image"]?>"  height="200px"  alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><?php echo $row["Name_Pro"]?></h5>
+                                    <!-- Product price-->
+                                  <?php echo $row["Price"]?>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                
 
-                            <?php }
-                          }?>
-                                                                
-            
-                                    </tbody>
-                                </table>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="product_detail_page.php?id=<?php echo  $row["ID_Pro"] ?>">View options</a></div>
                             </div>
                         </div>
                     </div>
+                 <?php 
+                 }}?>   
                 </div>
             </div>
+        </section>
+  
 
-        </div>
-  <!-- Modal EDIT-->
-  <div class="modal fade" id="modaledi" tabindex="-1" role="dialog"  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h5 class="modal-title w-100 font-weight-bold">Modify</h5>
-      </div>
-     
-<div class="modal-body mx-3">
-      <form  method="POST" action="database/modify_produit.php" enctype="multipart/form-data" >
-          <input type="hidden" name="ID_Pro" id="ID_Pro">
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Name  Product</label>
-            <input type="text" required placeholder="First name" id="namePro" name="namePro" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Price</label>
-            <input  type="number"  required placeholder="Price" id="price" name="price" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-          <input type="hidden" name="image" id="image">
-            <input type='file' name='fil'     accept=".jpg, .png, .jpeg" class="form-control-file">
-         </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">	Description</label>
-            <textarea class="form-control" required name="descriptionPro" id="descriptionPro" id="message-text"></textarea>
-          </div>
-        
-      </div>
-      <div class="modal-footer ">
-        <button type="submit" class="btn btn-primary" name="save" >save</button>
-        <button type="button" class="btn btn-danger dismissm" data-dismiss="modal">Close</button>
-      </div>
-   </form>
-   </div>
-  </div>
-  </div>
-</div>
-        <!-- Modal -->
-<div class="modal fade" id="exampleModaladd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
+        <!-- Footer -->
+        <footer class="page-footer font-small bg-dark text-white-50 fixed-bottom">
 
-        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form  method="POST" action="database/Insert.php" enctype="multipart/form-data" >
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Name  Product</label>
-            <input type="text" required placeholder="First name"  name="namePro" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Price</label>
-            <input type="number" required placeholder="Price" name="price" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <input type='file' name='fil'    required   accept=".jpg, .png, .jpeg" class="form-control-file">
-         </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">	Description</label>
-            <textarea class="form-control" name="descriptionPro" id="message-text"></textarea>
-          </div>
-        
-         </div>
-          <div class="modal-footer">
-             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-             <input type="submit" class="btn btn-primary" name="Insert" value="Save"/>
-          </div>
-          </form>
-      </div>
-  </div>
-</div>
-
-     <?php include 'footer.php';?>  
-<script> 
-  $(document).ready(function(){
-
-  $(".modaledit").click(function(){
-    $("#modaledi").modal("show");
-
-    $tr=$(this).closest('tr');
-    var data =$tr.children("td").map(function(){
-     return $(this).text();
-    }).get();
-         
-    $('#ID_Pro').val(data['0']);
-    $('#namePro').val(data['1']);
-    $('#descriptionPro').val(data['2']);
-    $('#price').val(data['3']);
-    $('#image').val(data['4']);
-  });
-
-});
-
-
-</script>
-       
-</body>
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright: Skycode-dz 2022</div>
+        <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+        <!-- Bootstrap core JS-->
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
