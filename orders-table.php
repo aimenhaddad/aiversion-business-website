@@ -1,7 +1,6 @@
 <?php 
 include_once "database/conn.php";
-$query = "SELECT Id_Client, Name_Client, Phone_Client, Qte_Order, ID_Pro, StatU_Order,City  FROM orders  ";
-$stmt =$conn->prepare($query);
+$stmt =$conn->prepare($produit->datavieworder());
 $stmt->execute();
 ?>
 
@@ -9,7 +8,9 @@ $stmt->execute();
 <html dir="ltl" lang="en">
 
 <head>
-<?php include 'head.php';?>
+    <?php include 'head.php';?>
+<title>Admin</title>
+
 </head>
 
 <body>
@@ -57,6 +58,9 @@ $stmt->execute();
                                             <th class="border-top-0">Full Name</th>
                                             <th class="border-top-0">Phone Number</th>
                                             <th class="border-top-0">Quantity</th>
+                                            <th class="border-top-0">Price</th>
+                                            <th class="border-top-0">Product</th>
+                                            <th class="border-top-0">City</th>
                                             <th class="border-top-0">Status</th>
                                         </tr>
                                     </thead>
@@ -65,9 +69,9 @@ $stmt->execute();
                                     <?php 
                                      if($stmt->rowCount()>0){
                                         while($row=$stmt->fetch(PDO::FETCH_ASSOC)){ 
-                                            if($row['StatU_Order']==1){
+                                            if($row['State']==1){
                                                 $stylec="color:#f0ad4e ";
-                                            }elseif($row['StatU_Order']==2){
+                                            }elseif($row['State']==2){
                                                   $stylec="color:#5cb85c";   
                                                 }else{
                                                   $stylec="color:#d9534f";   
@@ -77,14 +81,17 @@ $stmt->execute();
                                             <td><?php echo $row['Id_Client']?></td>
                                             <td><?php echo $row['Name_Client']?></td>
                                             <td><?php echo $row['Phone_Client']?></td>
+                                            <td><?php echo $row['Qte']?></td>
+                                            <td><?php echo $row['Price']?></td>
+                                            <td><?php echo $row['Name_Pro']?></td>
                                             <td><?php echo $row['City']?></td>
-                                            <td><?php echo $row['Qte_Order']?></td>
+                                           
                                             <td> 
                                             <form method="POST" action="database/modify_orders.php">
                                                 <input type="hidden" name="Id_Client" value="<?php echo $row['Id_Client']?>">
                                          
                                             <select name="state" style="<?=$stylec?>" >
-                                             <?php $produit->Statuview($row['StatU_Order']);  ?>
+                                             <?php $produit->Statuview($row['State']);  ?>
                                             </select>  
                                             <input type="submit" class="btn btn-text  text-sm"  name="upstate" value="save" style="<?=$stylec?>"/>
                                        

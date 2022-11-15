@@ -70,13 +70,14 @@ public function __construct($conn){
 
 
 
-
-
-    public function dataview(){
-            $query = "SELECT  ID_Pro,Name_Pro, Description_Pro, image, Price FROM produits ";
-            $stmt =$this->db->prepare($query);
-            $stmt->execute();
-            return $stmt;
+    public function datavieworder( ){
+        $sql = "SELECT Id_Client, Name_Client, Phone_Client, Qte, Name_Pro, State, City, Price, shipping FROM orders ORDER BY Id_Client DESC  ";
+        return $sql;
+    }
+    public function dataviewproduit( ){
+            $sql = "SELECT  ID_Pro,Name_Pro, Description_Pro, image, Price FROM produits ORDER BY ID_Pro DESC";
+             return $sql;
+         
     }
 
 
@@ -102,10 +103,10 @@ public function __construct($conn){
         }
     }
 
-    public function updateStatusOrder($Id_Client,$StatU_Order){
+    public function updateStatusOrder($Id_Client,$State){
         try{
-            $stmt = $this->db->prepare("UPDATE orders SET StatU_Order=:StatU_Order   WHERE Id_Client=:Id_Client");
-            $stmt->bindparam(":StatU_Order",$StatU_Order);
+            $stmt = $this->db->prepare("UPDATE orders SET State=:State   WHERE Id_Client=:Id_Client");
+            $stmt->bindparam(":State",$State);
             $stmt->bindparam(":Id_Client",$Id_Client);
             $stmt->execute();
             return true;

@@ -62,7 +62,7 @@ $conn->close();
         </header>
         <!-- Section-->
         <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
+            <div class="container  px-lg-5 mt-5">
                 <div class="row justify-content-center">
 
                 <?php
@@ -70,24 +70,22 @@ $conn->close();
                     // output data of each row
                     while($row = $result->fetch_assoc()) {
                 ?>
-                    <div class="col-sm-12 col-md-4 col-xl-3 mb-5">
-                        <div class="card h-100">
+                    <div class="col-sm-12 col-md-4 col-xl-3 mb-5 ">
+                        <div class="card h-100  rounded-2 ">
                             <!-- Product image-->
-                            <img class="card-img-top" src="database/upload/<?php echo $row["image"]?>"  height="200px"  alt="..." />
+                            <img class="card-img-top  border border-1 border-dark " src="database/upload/<?php echo $row["image"]?>" height="250px"  alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder"><?php echo $row["Name_Pro"]?></h5>
+                                    <h4 ><?php echo $row["Name_Pro"]?></h4>
                                     <!-- Product price-->
-                                  <?php echo $row["Price"]?>
+                                   <span class="h5"style="color:#1fd566;"> <?php echo $row["Price"]?> DA</span>
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                
-
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="product_detail_page.php?id=<?php echo  $row["ID_Pro"] ?>">View options</a></div>
+                              <div class="text-center"><a class="btn btn-outline-primary mt-auto  " style="border-radius: 25px;"  href="product_detail_page.php?id=<?php echo  $row["ID_Pro"] ?>"> Order Now!</a></div>
                             </div>
                         </div>
                     </div>

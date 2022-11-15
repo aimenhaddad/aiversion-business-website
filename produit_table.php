@@ -1,7 +1,7 @@
 <?php 
 include_once "database/conn.php";
- $query = "SELECT  ID_Pro,Name_Pro, Description_Pro, image, Price FROM produits ";
- $stmt =$conn->prepare($query);
+ 
+ $stmt =$conn->prepare($produit->dataviewproduit());
  $stmt->execute();
 
 ?>
@@ -9,9 +9,11 @@ include_once "database/conn.php";
 <html dir="ltr" lang="en">
 
 <head>
-<?php include 'head.php';?>
+  <?php include 'head.php';?>
+<title>Admin</title>
+
 </head>
-produit_table
+
 <body>
   <?php include 'header.php' ;?>    
        <!--  ============================================================== -->
