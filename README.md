@@ -1,1 +1,2 @@
-# Aiversion-shop-side-server
+# A-inversion-shop
+E-comerce Web site front end
